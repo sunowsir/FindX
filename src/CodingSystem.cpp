@@ -8,6 +8,7 @@
 #include "CodingSystem.h"
 
 
+#include <iostream>
 std::string SKF::getCoding (unsigned char character) {
     int code = character;
     std::string ret = "";

@@ -13,10 +13,11 @@ SKF::BTrie::BTrie () {
     this->count = 0;
     this->nodeNum = 0;
     this->child = new BTrie*[2];
+    this->child[0] = this->child[1] = nullptr;
     this->fail = nullptr;
 }
 
-bool SKF::BTrie::insert (std::string pattern) {
+bool SKF::BTrie::insert (const std::string& pattern) {
     BTrie *root = this;
     int count = 0;
     for (int i = 0; i < (int)pattern.size(); i++) {
@@ -59,19 +60,28 @@ void SKF::BTrie::build () {
     return ;
 }
 
-int SKF::BTrie::match (std::string str, std::vector<int>& ans) {
+#include <iostream>
+
+int SKF::BTrie::match (const std::string& str, 
+                    std::vector<int>& ans) {
     int ret = 0;
-    BTrie *root = this, *q;
+    BTrie *root = this, *q = nullptr;
+    std::cout << str.size() << "\n";
     for (int i = 0; i < (int)str.size(); i++) {
         std::string code = getCoding(str[i]);
-        for (int i = 0; i < (int)code.size(); i++) {
-            root = root->child[code[i] - '0'];
+        if (i == 7) std::cout << "code = " << code << "\n";
+        for (int j = 0; j < (int)code.size(); j++) {
+            if (i == 7) std::cout << "1 code[" << j << "] = " << code[j] << "\n";
+            root = root->child[code[j] - '0'];
+            if (i == 7) std::cout << "2 code[" << j << "] = " << code[j] << "\n";
             q = root;
+            if (i == 7) std::cout << "3 code[" << j << "] = " << code[j] << "\n\n";
         }
+        // std::cout << "str[" << i << "] = " << str[i] << "\n";
         while (q) {
             if (q->flag.size() > 0) {
-                for (int i = 0; i < (int)q->flag.size(); i++) {
-                    ans[q->flag[i]] += q->indepWord;
+                for (int j = 0; j < (int)q->flag.size(); j++) {
+                    ans[q->flag[j]] += q->indepWord;
                 }
             }
             ret += q->count;
@@ -79,6 +89,7 @@ int SKF::BTrie::match (std::string str, std::vector<int>& ans) {
         }
         if (root == nullptr) root = this;
     }
+    std::cout << "test!!!\n";
     return ret;
 }
 

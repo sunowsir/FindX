@@ -4,6 +4,7 @@ VPATH 	= ../src/:../include/
 RELY 	= \
 		CodingSystem.o \
 		BinaryTrie.o \
+		Application.o \
 		FindXmain.o
 
 FindX : ${RELY}
@@ -16,6 +17,10 @@ CodingSystem.o : CodingSystem.cpp CodingSystem.h
 
 BinaryTrie.o : BinaryTrie.cpp BinaryTrie.h
 	@echo "[CC] [Build] BinaryTrie.o"
+	@${CC} -c ${CFLAGS} $<
+
+Application.o : Application.cpp Application.h
+	@echo "[CC] [Build] Application.o"
 	@${CC} -c ${CFLAGS} $<
 
 FindXmain.o : FindXmain.cpp BinaryTrie.h 

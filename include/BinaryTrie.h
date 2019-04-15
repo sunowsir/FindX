@@ -26,9 +26,9 @@ namespace SKF {
         BTrie **child, *fail;
     public : 
         BTrie();
-        bool insert(std::string pattern);
+        bool insert(const std::string& pattern);
         void build();
-        int match(std::string str, std::vector<int>& ans);
+        int match(const std::string& str, std::vector<int>& ans);
     };
 }
 
