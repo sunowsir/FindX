@@ -46,10 +46,9 @@ int SKF::Application::run () {
     
     std::string buffer(_temp);
     int ret = root->match(buffer, ans);
-    std::cout << "test!!!\n";
     if (!ret) return -3;
     
-    std::cout << "Matching Number : " << std::endl;
+    std::cout << "Word frequency : " << std::endl;
     for (int i = 0; i < (int)ans.size(); i++) {
         std::cout << "[ " << ans[i] << " ] \"" << *this->pattern[i]  << "\""  << std::endl;
     }

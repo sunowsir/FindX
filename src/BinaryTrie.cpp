@@ -60,24 +60,17 @@ void SKF::BTrie::build () {
     return ;
 }
 
-#include <iostream>
-
 int SKF::BTrie::match (const std::string& str, 
                     std::vector<int>& ans) {
     int ret = 0;
     BTrie *root = this, *q = nullptr;
-    std::cout << str.size() << "\n";
     for (int i = 0; i < (int)str.size(); i++) {
         std::string code = getCoding(str[i]);
-        if (i == 7) std::cout << "code = " << code << "\n";
         for (int j = 0; j < (int)code.size(); j++) {
-            if (i == 7) std::cout << "1 code[" << j << "] = " << code[j] << "\n";
             root = root->child[code[j] - '0'];
-            if (i == 7) std::cout << "2 code[" << j << "] = " << code[j] << "\n";
+            if (!root) root = this;
             q = root;
-            if (i == 7) std::cout << "3 code[" << j << "] = " << code[j] << "\n\n";
         }
-        // std::cout << "str[" << i << "] = " << str[i] << "\n";
         while (q) {
             if (q->flag.size() > 0) {
                 for (int j = 0; j < (int)q->flag.size(); j++) {
@@ -89,7 +82,6 @@ int SKF::BTrie::match (const std::string& str,
         }
         if (root == nullptr) root = this;
     }
-    std::cout << "test!!!\n";
     return ret;
 }
 
