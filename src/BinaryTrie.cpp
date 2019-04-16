@@ -60,12 +60,12 @@ void SKF::BTrie::build () {
     return ;
 }
 
-int SKF::BTrie::match (const std::string& str, 
-                    std::vector<int>& ans) {
+int SKF::BTrie::match   (const std::string&     buffer, 
+                         std::vector<int>&      ans) {
     int ret = 0;
     BTrie *root = this, *q = nullptr;
-    for (int i = 0; i < (int)str.size(); i++) {
-        std::string code = getCoding(str[i]);
+    for (int i = 0; i < (int)buffer.size(); i++) {
+        std::string code = getCoding(buffer[i]);
         for (int j = 0; j < (int)code.size(); j++) {
             root = root->child[code[j] - '0'];
             if (!root) root = this;

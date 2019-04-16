@@ -9,6 +9,7 @@
 #define _APPLICATION_H
 
 #include <cstdio>
+#include <cstring>
 
 #include <vector>
 #include <string>

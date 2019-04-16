@@ -35,23 +35,31 @@ int SKF::Application::run () {
         int ret = root->insert(*(this->pattern[i]));
         if (!ret) return -1;
     }
-    root->build();
-    std::vector<int> ans(patternNum);
     
-    char _temp[102400];
+    root->build();
+    
+    std::vector<int> ans(patternNum);
     FILE* fp = fopen((*this->bufferFile).c_str(), "r");
     if (!fp) return -2;
-    fscanf(fp, "%s", _temp);
+    #define MAXBUFF 102400
+    char *_temp = (char *)calloc(sizeof(char), MAXBUFF + 10);
+    
+    while (fgets(_temp, MAXBUFF, fp) != NULL) {
+        if (!strlen(_temp)) continue;
+        std::string buffer(_temp);
+        root->match(buffer, ans);
+        memset(_temp, 0, sizeof(char) * (MAXBUFF + 10));
+    }
+    free(_temp);
     fclose(fp);
     
-    std::string buffer(_temp);
-    int ret = root->match(buffer, ans);
-    if (!ret) return -3;
-    
+    /* output result  */
     std::cout << "Word frequency : " << std::endl;
     for (int i = 0; i < (int)ans.size(); i++) {
-        std::cout << "[ " << ans[i] << " ] \"" << *this->pattern[i]  << "\""  << std::endl;
+        std::cout << "[ \033[1;32m" << ans[i] << "\033[0m ] \"" << *this->pattern[i]  << "\""  << std::endl;
     }
+
+    #undef MAXBUFF
     
     delete root;
     return 0;
